@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-08-24T22:32:51.387Z",
+  "summary": {
+    "total": 5,
+    "valid": 5,
+    "invalid": 0,
+    "successRate": "100.0"
+  },
+  "distributions": {
+    "subjects": {
+      "Biology": 1,
+      "Chemistry": 1,
+      "Physics": 1,
+      "English": 1,
+      "Logical Reasoning": 1
+    },
+    "sources": {
+      "UHS": 5
+    },
+    "difficulties": {
+      "easy": 3,
+      "moderate": 2
+    }
+  },
+  "englishCompliance": {
+    "total": 1,
+    "grammarOnly": 1,
+    "nonGrammar": []
+  },
+  "errors": [],
+  "warnings": []
+}

@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDCAT Past Paper Generator - AI Powered</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%);
+            --danger-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --girl-power-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --motivation-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --border: #e2e8f0;
+            --border-radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Enhanced animated background */
+        .background-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        .particle:nth-child(1) { width: 12px; height: 12px; top: 15%; left: 10%; background: rgba(255, 182, 193, 0.4); animation-delay: 0s; }
+        .particle:nth-child(2) { width: 8px; height: 8px; top: 50%; left: 85%; background: rgba(255, 255, 255, 0.3); animation-delay: 2s; }
+        .particle:nth-child(3) { width: 15px; height: 15px; top: 75%; left: 15%; background: rgba(255, 192, 203, 0.5); animation-delay: 4s; }
+        .particle:nth-child(4) { width: 10px; height: 10px; top: 25%; left: 75%; background: rgba(255, 255, 255, 0.4); animation-delay: 1s; }
+        .particle:nth-child(5) { width: 18px; height: 18px; top: 65%; left: 60%; background: rgba(255, 182, 193, 0.3); animation-delay: 3s; }
+        .particle:nth-child(6) { width: 6px; height: 6px; top: 35%; left: 40%; background: rgba(255, 255, 255, 0.5); animation-delay: 5s; }
+        .particle:nth-child(7) { width: 14px; height: 14px; top: 85%; left: 80%; background: rgba(255, 192, 203, 0.4); animation-delay: 6s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px) scale(1); opacity: 0.6; }
+            25% { transform: translateY(-20px) translateX(10px) scale(1.1); opacity: 0.8; }
+            50% { transform: translateY(-10px) translateX(-15px) scale(0.9); opacity: 0.4; }
+            75% { transform: translateY(-30px) translateX(5px) scale(1.05); opacity: 0.7; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Enhanced header */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+            animation: slideInDown 1s ease-out;
+        }
+
+        @keyframes slideInDown {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo i {
+            margin-right: 16px;
+            background: var(--girl-power-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Enhanced stats grid */
+        .header-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            transition: var(--transition);
+            animation: slideInUp 1s ease-out;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .stat-item i {
+            font-size: 24px;
+            margin-bottom: 12px;
+            background: var(--girl-power-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes slideInUp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Enhanced sections */
+        .section {
+            margin: 40px 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .section-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-heavy);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--girl-power-gradient);
+            opacity: 0.03;
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Timer Section */
+        .timer-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--danger-gradient);
+            color: white;
+            padding: 16px 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            z-index: 1000;
+            font-weight: 700;
+            font-size: 20px;
+            animation: slideInRight 1s ease-out;
+            display: none;
+        }
+
+        @keyframes slideInRight {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .timer-container.warning {
+            animation: shake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Enhanced form elements */
+        .form-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .test-format-tabs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .tab-button {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid transparent;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--girl-power-gradient);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .tab-button:hover::before,
+        .tab-button.active::before {
+            left: 0;
+        }
+
+        .tab-button:hover,
+        .tab-button.active {
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .tab-button i {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        /* Subject grid enhancements */
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 32px 0;
+        }
+
+        .subject-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--success-gradient);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .subject-card:hover::before,
+        .subject-card.selected::before {
+            opacity: 0.1;
+        }
+
+        .subject-card:hover,
+        .subject-card.selected {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-heavy);
+            border-color: #4facfe;
+        }
+
+        .subject-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subject-info {
+            color: var(--text-secondary);
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Form controls */
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .form-select,
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-select:focus,
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced buttons */
+        .btn {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.6s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .btn-secondary {
+            background: var(--girl-power-gradient);
+        }
+
+        /* Questions section */
+        .question-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-medium);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--girl-power-gradient);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: var(--border-radius);
+            margin: -32px -32px 24px -32px;
+        }
+
+        .question-number {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .question-meta {
+            text-align: right;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .options-container {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--success-gradient);
+            transform: scaleY(0);
+            transition: var(--transition);
+        }
+
+        .option-label:hover::before,
+        .option-label.selected::before {
+            transform: scaleY(1);
+        }
+
+        .option-label:hover,
+        .option-label.selected {
+            border-color: #4facfe;
+            background: rgba(79, 172, 254, 0.05);
+            transform: translateX(8px);
+        }
+
+        .option-input {
+            margin-right: 16px;
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+
+        /* Progress and navigation */
+        .progress-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 50px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success-gradient);
+            border-radius: 50px;
+            transition: width 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Motivational quotes */
+        .motivational-quote {
+            background: var(--motivation-gradient);
+            border-radius: 24px;
+            padding: 32px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .motivational-quote::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.2);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2d3748;
+            font-style: italic;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 16px;
+        }
+
+        .quote-author {
+            font-size: 16px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        @keyframes fadeInUp {
+            0% { transform: translateY(30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Results section enhancements */
+        .results-container {
+            text-align: center;
+            position: relative;
+        }
+
+        .score-display {
+            background: var(--success-gradient);
+            color: white;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-heavy);
+            position: relative;
+            animation: bounceIn 1s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .score-percentage {
+            font-size: 48px;
+            font-weight: 800;
+        }
+
+        .score-status {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Loading animation */
+        .loading-container {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(102, 126, 234, 0.2);
+            border-left: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .section-content {
+                padding: 24px;
+                border-radius: 16px;
+            }
+
+            .test-format-tabs {
+                grid-template-columns: 1fr;
+            }
+
+            .control-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 12px;
+            }
+
+            .header-stats {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 12px;
+            }
+
+            .timer-container {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 20px;
+                font-size: 18px;
+            }
+
+            .question-header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .quote-text {
+                font-size: 20px;
+            }
+
+            .score-display {
+                width: 150px;
+                height: 150px;
+            }
+
+            .score-percentage {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Timer -->
+    <div id="timerContainer" class="timer-container">
+        <i class="fas fa-clock"></i>
+        <span id="timer">3:00:00</span>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                MDCAT Generator
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <i class="fas fa-database"></i>
+                    <div>1000+ Questions</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-university"></i>
+                    <div>12+ Universities</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-calendar"></i>
+                    <div>2010-2025</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-female"></i>
+                    <div>Empowering Dreams</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Motivational Quote for Start -->
+        <div class="motivational-quote">
+            <div class="quote-text">
+                "Your dreams of healing the world start with believing in yourself. You've got this, future healer! 💖"
+            </div>
+            <div class="quote-author">— From Usman Sy3D</div>
+        </div>
+
+        <!-- Input Section -->
+        <section id="inputSection" class="section">
+            <div class="section-content">
+                <div class="section-header">
+                    <h1 class="section-title">
+                        <i class="fas fa-brain"></i>
+                        AI-Powered MDCAT Practice
+                    </h1>
+                    <p class="section-subtitle">Master your MDCAT preparation with authentic past paper questions</p>
+                    <p class="section-description">Choose your test format and start practicing with questions from UHS, KMU, DUHS, BUMHS, NUMS, AIMC, KEMU, CMH, ISRA, and more past papers</p>
+                </div>
+
+                <div class="form-container">
+                    <!-- Test Format Selection -->
+                    <div class="form-group">
+                        <div class="test-format-tabs">
+                            <button class="tab-button active" data-format="full-test">
+                                <i class="fas fa-clipboard-list"></i>
+                                <div>Full MDCAT Test</div>
+                                <small>180 Questions - 3 Hours</small>
+                            </button>
+                            <button class="tab-button" data-format="subject-test">
+                                <i class="fas fa-book"></i>
+                                <div>Subject-wise Test</div>
+                                <small>Focus on One Subject</small>
+                            </button>
+                            <button class="tab-button" data-format="topic-test">
+                                <i class="fas fa-search"></i>
+                                <div>Topic Practice</div>
+                                <small>Specific Topic Focus</small>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Subject Selection -->
+                    <div id="subjectSelection" class="form-group hidden">
+                        <label class="form-label">
+                            <i class="fas fa-books"></i>
+                            Select Subject
+                        </label>
+                        <div class="subject-grid">
+                            <div class="subject-card" data-subject="all">
+                                <div class="subject-title">All Subjects</div>
+                                <div class="subject-info">Mixed Practice</div>
+                            </div>
+                            <div class="subject-card" data-subject="biology">
+                                <div class="subject-title">Biology</div>
+                                <div class="subject-info">81 MCQs (45%)</div>
+                            </div>
+                            <div class="subject-card" data-subject="chemistry">
+                                <div class="subject-title">Chemistry</div>
+                                <div class="subject-info">45 MCQs (25%)</div>
+                            </div>
+                            <div class="subject-card" data-subject="physics">
+                                <div class="subject-title">Physics</div>
+                                <div class="subject-info">36 MCQs (20%)</div>
+                            </div>
+                            <div class="subject-card" data-subject="english">
+                                <div class="subject-title">English</div>
+                                <div class="subject-info">9 MCQs (5%) - Grammar Only</div>
+                            </div>
+                            <div class="subject-card" data-subject="logical">
+                                <div class="subject-title">Logical Reasoning</div>
+                                <div class="subject-info">9 MCQs (5%)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic Input -->
+                    <div id="topicInput" class="form-group hidden">
+                        <label for="topicInput" class="form-label">
+                            <i class="fas fa-lightbulb"></i>
+                            Enter Topic
+                        </label>
+                        <input type="text" id="topicInputField" class="form-input" 
+                               placeholder="e.g., Cell Biology, Organic Chemistry, Thermodynamics...">
+                        <small style="color: #666; margin-top: 8px; display: block; font-size: 14px;">
+                            Enter any MDCAT syllabus topic. Our AI will find relevant questions from past papers.
+                        </small>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="control-grid">
+                        <div class="form-group">
+                            <label for="questionCount" class="form-label">
+                                <i class="fas fa-hashtag"></i>
+                                Number of Questions
+                            </label>
+                            <select id="questionCount" class="form-select">
+                                <option value="180">180 Questions (Full MDCAT - 3 Hours)</option>
+                                <option value="100">100 Questions (2 Hours)</option>
+                                <option value="60">60 Questions (1.5 Hours)</option>
+                                <option value="50">50 Questions (Extended)</option>
+                                <option value="30">30 Questions (Long)</option>
+                                <option value="20" selected>20 Questions (Medium)</option>
+                                <option value="15">15 Questions (Short)</option>
+                                <option value="10">10 Questions (Quick)</option>
+                                <option value="5">5 Questions (Practice)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paperSource" class="form-label">
+                                <i class="fas fa-university"></i>
+                                Paper Source
+                            </label>
+                            <select id="paperSource" class="form-select">
+                                <option value="all">All Universities</option>
+                                <option value="uhs">UHS (Punjab)</option>
+                                <option value="kmu">KMU (KPK)</option>
+                                <option value="duhs">DUHS (Sindh)</option>
+                                <option value="bumhs">BUMHS (Balochistan)</option>
+                                <option value="nums">NUMS (Federal)</option>
+                                <option value="aimc">AIMC (Lahore)</option>
+                                <option value="kemu">KEMU (Punjab)</option>
+                                <option value="cmh">CMH (Armed Forces)</option>
+                                <option value="isra">ISRA University</option>
+                                <option value="ziauddin">Ziauddin University</option>
+                                <option value="hamdard">Hamdard University</option>
+                                <option value="riphah">Riphah University</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="yearRange" class="form-label">
+                                <i class="fas fa-calendar-alt"></i>
+                                Year Range
+                            </label>
+                            <select id="yearRange" class="form-select">
+                                <option value="all">All Years (2010-2025)</option>
+                                <option value="recent">Recent (2020-2025)</option>
+                                <option value="2020s">2020s Era</option>
+                                <option value="2010s">2010s Era (2010-2019)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="difficulty" class="form-label">
+                                <i class="fas fa-chart-line"></i>
+                                Difficulty Level
+                            </label>
+                            <select id="difficulty" class="form-select">
+                                <option value="mixed">Mixed (15% Easy, 70% Medium, 15% Hard)</option>
+                                <option value="easy">Easy Level</option>
+                                <option value="medium">Medium Level</option>
+                                <option value="hard">Hard Level</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button id="generateBtn" class="btn btn-secondary">
+                            <i class="fas fa-magic"></i>
+                            Generate Questions
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Section -->
+        <section id="loadingSection" class="section hidden">
+            <div class="section-content">
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <h2>🧠 AI is crafting your perfect practice questions...</h2>
+                    <p>This might take a moment for larger tests. Your success is worth the wait! 💫</p>
+                    <div id="loadingProgress" style="margin-top: 20px; font-weight: 600;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Questions Section -->
+        <section id="questionsSection" class="section hidden">
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
+                </div>
+                <div style="text-align: center;">
+                    <span id="questionCounter">Question 1 of 20</span>
+                </div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <button id="submitBtn" class="btn">
+                    <i class="fas fa-check-circle"></i>
+                    Submit Test
+                </button>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="section hidden">
+            <div class="section-content">
+                <div class="results-container">
+                    <div id="resultsContent"></div>
+                    
+                    <div id="finalMotivationalQuote" class="motivational-quote">
+                        <!-- Dynamic motivational quote based on performance -->
+                    </div>
+
+                    <div style="margin: 40px 0;">
+                        <button id="reviewBtn" class="btn" onclick="showReviewAnswers()">
+                            <i class="fas fa-eye"></i>
+                            Review Answers
+                        </button>
+                        <button id="retakeBtn" class="btn btn-secondary" onclick="retakeTest()">
+                            <i class="fas fa-redo"></i>
+                            Retake Test
+                        </button>
+                        <button id="newTestBtn" class="btn" onclick="newTest()">
+                            <i class="fas fa-plus"></i>
+                            New Test
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Review Section -->
+        <section id="reviewSection" class="section hidden">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-clipboard-check"></i>
+                        Review Your Answers
+                    </h2>
+                    <p class="section-description">Learn from your mistakes and strengthen your knowledge</p>
+                </div>
+                <div id="reviewContent"></div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn" onclick="hideReviewAnswers()">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Results
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Global variables
+        let currentQuestions = [];
+        let userAnswers = {};
+        let selectedSubject = null;
+        let selectedFormat = 'full-test';
+        let testTimer = null;
+        let startTime = null;
+        let timeLimit = 0; // in seconds
+
+        // Motivational quotes for different scenarios
+        const motivationalQuotes = {
+            excellent: [
+                "🌟 Outstanding! You're shining brighter than the stars! Your dedication and hard work are truly paying off. Keep this amazing momentum going, future doctor! 💫",
+                "✨ Incredible performance! You're not just preparing for MDCAT, you're preparing to change the world through medicine. Your patients will be so lucky to have you! 🏥💕",
+                "🎯 Perfect! You're proving that dreams backed by determination become unstoppable reality. Your future in medicine is as bright as your brilliant mind! 🧠💎"
+            ],
+            great: [
+                "🚀 Great work! You're on the right track to achieving your medical dreams! Every correct answer is a step closer to your white coat ceremony! 👩‍⚕️✨",
+                "💪 Excellent progress! Your determination is inspiring. Remember, every great doctor started exactly where you are now. Keep pushing forward! 🌈",
+                "🎊 Fantastic job! You're building the foundation for a beautiful career in healing. Your future patients are waiting for someone as dedicated as you! 💙"
+            ],
+            good: [
+                "📚 You're doing well! Remember, every expert was once a beginner. Focus on your areas of improvement and watch yourself soar! 🦋✨",
+                "🌱 Good progress! Like a flower that blooms with patience and care, your medical knowledge is growing beautifully. Keep nurturing it! 🌸",
+                "💝 Well done! Your journey to becoming a doctor is unique and special. Trust the process and believe in your incredible potential! 🌟"
+            ],
+            needsWork: [
+                "🌈 Every rainbow comes after the storm! This is just the beginning of your incredible journey. Your determination will take you places! 💪✨",
+                "🦋 Beautiful souls like yours are meant to heal the world. Don't let this score dim your shine - you have everything it takes to succeed! 💎🌟",
+                "🌻 Even the strongest trees face storms before they reach the sky. Your resilience will make you an extraordinary doctor. Keep believing! 💫❤️"
+            ]
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            setupTestFormatTabs();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('generateBtn').addEventListener('click', generateQuestions);
+            document.getElementById('submitBtn').addEventListener('click', submitTest);
+        }
+
+        function setupTestFormatTabs() {
+            const tabs = document.querySelectorAll('.tab-button');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    selectedFormat = this.dataset.format;
+                    toggleFormSections();
+                });
+            });
+        }
+
+        function toggleFormSections() {
+            const subjectSelection = document.getElementById('subjectSelection');
+            const topicInput = document.getElementById('topicInput');
+            
+            subjectSelection.classList.add('hidden');
+            topicInput.classList.add('hidden');
+            
+            if (selectedFormat === 'subject-test') {
+                subjectSelection.classList.remove('hidden');
+                setupSubjectCards();
+            } else if (selectedFormat === 'topic-test') {
+                topicInput.classList.remove('hidden');
+            }
+        }
+
+        function setupSubjectCards() {
+            const cards = document.querySelectorAll('.subject-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    cards.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedSubject = this.dataset.subject;
+                });
+            });
+        }
+
+        function setTimer(questions) {
+            const questionCount = questions.length;
+            
+            // Set timer based on question count
+            if (questionCount >= 180) timeLimit = 3 * 60 * 60; // 3 hours
+            else if (questionCount >= 100) timeLimit = 2 * 60 * 60; // 2 hours  
+            else if (questionCount >= 60) timeLimit = 90 * 60; // 1.5 hours
+            else if (questionCount >= 30) timeLimit = 60 * 60; // 1 hour
+            else timeLimit = 30 * 60; // 30 minutes for shorter tests
+            
+            document.getElementById('timerContainer').style.display = 'block';
+            startTimer();
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            let remainingTime = timeLimit;
+            
+            testTimer = setInterval(() => {
+                remainingTime--;
+                
+                if (remainingTime <= 0) {
+                    clearInterval(testTimer);
+                    submitTest(true); // Auto-submit when time is up
+                    return;
+                }
+                
+                const hours = Math.floor(remainingTime / 3600);
+                const minutes = Math.floor((remainingTime % 3600) / 60);
+                const seconds = remainingTime % 60;
+                
+                const timerDisplay = `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                document.getElementById('timer').textContent = timerDisplay;
+                
+                // Warning when 10 minutes left
+                if (remainingTime <= 600 && remainingTime > 300) {
+                    document.getElementById('timerContainer').classList.add('warning');
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (testTimer) {
+                clearInterval(testTimer);
+                testTimer = null;
+            }
+            document.getElementById('timerContainer').style.display = 'none';
+            document.getElementById('timerContainer').classList.remove('warning');
+        }
+
+        async function generateQuestions() {
+            const questionCount = parseInt(document.getElementById('questionCount').value);
+            const paperSource = document.getElementById('paperSource').value;
+            const yearRange = document.getElementById('yearRange').value;
+            const difficulty = document.getElementById('difficulty').value;
+            
+            let requestData = {
+                count: questionCount,
+                testFormat: selectedFormat,
+                source: paperSource,
+                yearRange: yearRange,
+                difficulty: difficulty
+            };
+
+            if (selectedFormat === 'subject-test' && selectedSubject) {
+                requestData.subject = selectedSubject;
+            } else if (selectedFormat === 'topic-test') {
+                const topic = document.getElementById('topicInputField').value.trim();
+                if (!topic) {
+                    alert('Please enter a topic to search for questions.');
+                    return;
+                }
+                requestData.topic = topic;
+            }
+
+            showLoadingSection();
+
+            try {
+                const response = await fetch('/api/generate-questions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.success && data.questions && data.questions.length > 0) {
+                    currentQuestions = data.questions;
+                    userAnswers = {};
+                    displayQuestions();
+                    setTimer(currentQuestions);
+                } else {
+                    throw new Error(data.error || 'Failed to generate questions');
+                }
+
+            } catch (error) {
+                console.error('Error generating questions:', error);
+                hideLoadingSection();
+                alert(`Failed to generate questions: ${error.message}`);
+            }
+        }
+
+        function showLoadingSection() {
+            document.getElementById('inputSection').classList.add('hidden');
+            document.getElementById('loadingSection').classList.remove('hidden');
+            
+            // Animate loading progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 90) progress = 90;
+                document.getElementById('loadingProgress').textContent = `Progress: ${Math.round(progress)}%`;
+            }, 500);
+            
+            // Clear progress animation after 30 seconds max
+            setTimeout(() => {
+                clearInterval(progressInterval);
+                document.getElementById('loadingProgress').textContent = 'Almost ready...';
+            }, 30000);
+        }
+
+        function hideLoadingSection() {
+            document.getElementById('loadingSection').classList.add('hidden');
+        }
+
+        function displayQuestions() {
+            hideLoadingSection();
+            document.getElementById('questionsSection').classList.remove('hidden');
+            
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            currentQuestions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-number">Question ${question.id || (index + 1)}</div>
+                        <div class="question-meta">
+                            <div><strong>${question.subject}</strong></div>
+                            <div>${question.topic}</div>
+                            <div><small>Source: ${question.source} | Year: ${question.year}</small></div>
+                        </div>
+                    </div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options-container">
+                        ${['A', 'B', 'C', 'D'].map((option, optionIndex) => `
+                            <label class="option-label" data-question="${index}" data-option="${option}">
+                                <input type="radio" name="question_${index}" value="${option}" class="option-input">
+                                <span>${option}. ${question.options[optionIndex]}</span>
+                            </label>
+                        `).join('')}
+
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            setupQuestionInteractions();
+            updateProgress();
+        }
+
+        function setupQuestionInteractions() {
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const selectedOption = this.dataset.option;
+                    
+                    // Remove previous selections for this question
+                    document.querySelectorAll(`label[data-question="${questionIndex}"]`).forEach(l => {
+                        l.classList.remove('selected');
+                    });
+                    
+                    // Mark current selection
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = selectedOption;
+                    
+                    updateProgress();
+                });
+            });
+        }
+
+        function updateProgress() {
+            const answeredCount = Object.keys(userAnswers).length;
+            const totalCount = currentQuestions.length;
+            const percentage = (answeredCount / totalCount) * 100;
+            
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('questionCounter').textContent = `Answered ${answeredCount} of ${totalCount}`;
+        }
+
+        function submitTest(autoSubmit = false) {
+            const answeredCount = Object.keys(userAnswers).length;
+            const totalCount = currentQuestions.length;
+            
+            if (!autoSubmit && answeredCount < totalCount) {
+                const unanswered = totalCount - answeredCount;
+                if (!confirm(`You have ${unanswered} unanswered questions. Submit anyway?`)) {
+                    return;
+                }
+            }
+
+            stopTimer();
+            showResults();
+        }
+
+        function showResults() {
+            document.getElementById('questionsSection').classList.add('hidden');
+            document.getElementById('resultsSection').classList.remove('hidden');
+            
+            const correct = calculateCorrectAnswers();
+            const total = currentQuestions.length;
+            const percentage = Math.round((correct / total) * 100);
+            
+            // Determine quote category
+            let quoteCategory;
+            if (percentage >= 85) quoteCategory = 'excellent';
+            else if (percentage >= 70) quoteCategory = 'great';
+            else if (percentage >= 55) quoteCategory = 'good';
+            else quoteCategory = 'needsWork';
+            
+            // Select random quote from category
+            const quotes = motivationalQuotes[quoteCategory];
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            
+            const resultsContent = document.getElementById('resultsContent');
+            resultsContent.innerHTML = `
+                <div class="score-display">
+                    <div class="score-percentage">${percentage}%</div>
+                    <div class="score-status">
+                        ${percentage >= 65 ? '✅ Eligible for Medical College' : 
+                          percentage >= 55 ? '⚡ Almost There!' : 
+                          percentage >= 40 ? '📈 Keep Improving!' : 
+                          '💪 Never Give Up!'}
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <h3 style="color: #667eea; margin-bottom: 16px;">📊 Detailed Results</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+                        <div style="background: rgba(79, 172, 254, 0.1); padding: 20px; border-radius: 12px;">
+                            <div style="font-size: 24px; font-weight: bold; color: #4facfe;">${correct}</div>
+                            <div>Correct Answers</div>
+                        </div>
+                        <div style="background: rgba(255, 107, 107, 0.1); padding: 20px; border-radius: 12px;">
+                            <div style="font-size: 24px; font-weight: bold; color: #ff6b6b;">${total - correct}</div>
+                            <div>Incorrect Answers</div>
+                        </div>
+                        <div style="background: rgba(102, 126, 234, 0.1); padding: 20px; border-radius: 12px;">
+                            <div style="font-size: 24px; font-weight: bold; color: #667eea;">${total}</div>
+                            <div>Total Questions</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Display motivational quote
+            document.getElementById('finalMotivationalQuote').innerHTML = `
+                <div class="quote-text">${randomQuote}</div>
+                <div class="quote-author">— Believe in yourself, future healer! 🌟</div>
+            `;
+        }
+
+        function calculateCorrectAnswers() {
+            let correct = 0;
+            Object.keys(userAnswers).forEach(questionIndex => {
+                const userAnswer = userAnswers[questionIndex];
+                const correctAnswer = currentQuestions[questionIndex].answer;
+                if (userAnswer === correctAnswer) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        function showReviewAnswers() {
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('reviewSection').classList.remove('hidden');
+            
+            const reviewContent = document.getElementById('reviewContent');
+            let reviewHTML = '';
+            
+            currentQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[index] || 'Not Answered';
+                const isCorrect = userAnswer === question.answer;
+                const statusIcon = isCorrect ? '✅' : '❌';
+                const statusColor = isCorrect ? '#4facfe' : '#ff6b6b';
+                
+                reviewHTML += `
+                    <div class="question-container" style="border-left: 4px solid ${statusColor};">
+                        <div class="question-header">
+                            <div class="question-number">Question ${question.id || (index + 1)} ${statusIcon}</div>
+                            <div class="question-meta">
+                                <div><strong>${question.subject}</strong> - ${question.topic}</div>
+                                <div>Source: ${question.source}</div>
+                            </div>
+                        </div>
+                        <div class="question-text">${question.question}</div>
+                        <div style="margin: 20px 0;">
+                            <div style="background: ${isCorrect ? 'rgba(79, 172, 254, 0.1)' : 'rgba(255, 107, 107, 0.1)'}; 
+                                       padding: 16px; border-radius: 12px; margin-bottom: 12px;">
+                                <strong>Your Answer:</strong> ${userAnswer} ${isCorrect ? '(Correct!)' : '(Incorrect)'}
+                            </div>
+                            <div style="background: rgba(76, 175, 80, 0.1); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+                                <strong>Correct Answer:</strong> ${question.answer}. ${question.options[question.answer]}
+                            </div>
+                            <div style="background: rgba(102, 126, 234, 0.05); border: 1px solid rgba(102, 126, 234, 0.1); 
+                                       border-radius: 12px; padding: 16px;">
+                                <div style="font-weight: 600; color: #667eea; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fas fa-lightbulb"></i> Explanation
+                                </div>
+                                ${question.explanation || 'Detailed explanation will help you understand this concept better.'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            reviewContent.innerHTML = reviewHTML;
+        }
+
+        function hideReviewAnswers() {
+            document.getElementById('reviewSection').classList.add('hidden');
+            document.getElementById('resultsSection').classList.remove('hidden');
+        }
+
+        function retakeTest() {
+            userAnswers = {};
+            
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('questionsSection').classList.remove('hidden');
+            
+            // Reset all selections
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.classList.remove('selected');
+            });
+            
+            updateProgress();
+            setTimer(currentQuestions);
+        }
+
+        function newTest() {
+            currentQuestions = [];
+            userAnswers = {};
+            selectedSubject = null;
+            stopTimer();
+            
+            // Clear selections
+            document.querySelectorAll('.subject-card').forEach(card => card.classList.remove('selected'));
+            document.getElementById('topicInputField').value = '';
+            
+            // Hide sections and show input
+            document.getElementById('questionsSection').classList.add('hidden');
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('reviewSection').classList.add('hidden');
+            document.getElementById('inputSection').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

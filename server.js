@@ -999,4 +999,9 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // Export for testing
 app.server = server;
-module.exports = { app, server, MDCAT_SYLLABUS, UNIVERSITIES };
+
+module.exports = app;
+module.exports.app = app;
+module.exports.server = server;
+module.exports.MDCAT_SYLLABUS = MDCAT_SYLLABUS;
+module.exports.UNIVERSITIES = UNIVERSITIES;
